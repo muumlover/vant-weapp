@@ -159,7 +159,9 @@ Page({
 | icon | 输入框尾部图标 (可选值见 Icon 组件)  | `String` | - |
 | left-icon | 输入框左侧图标 (可选值见 Icon 组件)  | `String` | - |
 | confirm-type | 设置键盘右下角按钮的文字，仅在 type='text' 时生效 | `String` | `done` |
+| confirm-hold | 点击键盘右下角按钮时是否保持键盘不收起，在 type='textarea' 时无效 | `Boolean` | `false` |
 | cursor-spacing | 输入框聚焦时底部与键盘的距离 | `Number` | `50` |
+| adjust-position | 键盘弹起时，是否自动上推页面 | `Boolean` | `true` |
 | use-icon-slot | 是否使用 icon slot  | `Boolean` | `false` |
 | use-button-slot | 是否使用 button slot  | `Boolean` | `false` |
 
@@ -167,12 +169,12 @@ Page({
 
 | 事件 | 说明 | 回调参数 |
 |-----------|-----------|-----------|
-| bind:input | 输入内容时触发 | value: 当前输入值 |
-| bind:change | 输入内容时触发 | value: 当前输入值 |
-| bind:confirm | 点击完成按钮时触发 | value: 当前输入值 |
+| bind:input | 输入内容时触发 | event.detail.value: 当前输入值; event.detail.cursor: 游标位置 |
+| bind:change | 输入内容时触发 | event.detail: 当前输入值 |
+| bind:confirm | 点击完成按钮时触发 | event.detail.value: 当前输入值 |
 | bind:click-icon | 点击尾部图标时触发 | - |
-| bind:focus | 输入框聚焦时触发 | - |
-| bind:blur | 输入框失焦时触发 | - |
+| bind:focus | 输入框聚焦时触发 | event.detail.value: 当前输入值; event.detail.height: 键盘高度(>1.9.90) |
+| bind:blur | 输入框失焦时触发 | event.detail.value: 当前输入值; event.detail.cursor: 游标位置(仅textarea) |
 | bind:clear | 点击清空控件时触发 | - |
 
 ### Slot

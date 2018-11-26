@@ -23,12 +23,17 @@ VantComponent({
     inputAlign: String,
     customClass: String,
     confirmType: String,
+    confirmHold: Boolean,
     errorMessage: String,
     placeholder: String,
     customStyle: String,
     useIconSlot: Boolean,
     useButtonSlot: Boolean,
     placeholderStyle: String,
+    adjustPosition: {
+      type: Boolean,
+      value: true
+    },
     cursorSpacing: {
       type: Number,
       value: 50
@@ -73,8 +78,8 @@ VantComponent({
 
   methods: {
     onInput(event: Weapp.Event) {
-      const { value = '' } = event.detail || {};
-      this.$emit('input', value);
+      const { value = '', cursor = 0 } = event.detail || {};
+      this.$emit('input', { value, cursor });
       this.$emit('change', value);
       this.setData({
         value,
@@ -82,17 +87,19 @@ VantComponent({
       });
     },
 
-    onFocus() {
-      this.$emit('focus');
+    onFocus(event: Weapp.Event) {
+      const { value = '', height = 0 } = event.detail || {};
+      this.$emit('focus', { value, height });
       this.focused = true;
       this.setData({
         showClear: this.getShowClear()
       });
     },
 
-    onBlur() {
+    onBlur(event: Weapp.Event) {
+      const { value = '', cursor = 0 } = event.detail || {};
+      this.$emit('blur', { value, cursor });
       this.focused = false;
-      this.$emit('blur');
       this.setData({
         showClear: this.getShowClear()
       });
@@ -114,13 +121,14 @@ VantComponent({
         value: '',
         showClear: this.getShowClear('')
       });
-      this.$emit('input', '');
+      this.$emit('input', { value: '', cursor: 0 });
       this.$emit('change', '');
       this.$emit('clear', '');
     },
 
-    onConfirm() {
-      this.$emit('confirm', this.data.value);
+    onConfirm(event: Weapp.Event) {
+        const { value = '' } = event.detail || {};
+        this.$emit('confirm', { value });
     }
   }
 });
